@@ -32,17 +32,6 @@ RUN set -eux \
         xz-dev \
         libffi-dev
 
-RUN set -eux \
-    && apk add \
-        --no-cache \
-        --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
-# Installing fonts and libraries
-        msttcorefonts-installer \
-        ttf-opensans \
-# Post install for the fonts
-    && update-ms-fonts \
-    && fc-cache -f
-
 ENV LANG="C.UTF-8" \
     LANGUAGE="en_US:en" \
     LC_COLLATE="C" \
