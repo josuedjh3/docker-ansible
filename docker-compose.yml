@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  ansible:
+    hostname: ansible
+    image: josuedjhcayola/alpine-ansible:ansible
+    ports:
+      - "8081:8081"
+    volumes:
+      - ".:/app"

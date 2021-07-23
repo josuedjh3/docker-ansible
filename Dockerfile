@@ -13,6 +13,9 @@ RUN set -eux \
     && apk add \
         --no-cache  \
 # Common tools for development and building
+        git \
+        unzip \
+        curl \
         gettext \
         tzdata \
         build-base \
@@ -22,6 +25,10 @@ RUN set -eux \
         bzip2-dev \
         libffi-dev \
         openssl-dev \
+        gcc musl-dev \
+        python3-dev \
+        libffi-dev \
+        cargo \
         readline-dev \
         zlib-dev \
         libxml2-dev \
@@ -31,6 +38,18 @@ RUN set -eux \
         bzip2-dev \
         xz-dev \
         libffi-dev
+
+
+RUN set -eux \
+    && apk add \
+        --no-cache \
+        --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
+# Installing fonts and libraries
+        msttcorefonts-installer \
+        ttf-opensans \
+# Post install for the fonts
+    && update-ms-fonts \
+    && fc-cache -f
 
 ENV LANG="C.UTF-8" \
     LANGUAGE="en_US:en" \
@@ -72,17 +91,23 @@ FROM base as develop
 
 RUN set -eux \
     && apk add --no-cache \
+        htop \
         openssh-client \
         groff \
         curl \
         unzip \
-        gnupg
+        gnupg \
+# Setup neovim as the replacement for vim.
+    && ln -s $(which nvim) /usr/local/bin/vim
 
 COPY ./skel /etc/skel
 
 RUN set -eux \
     && mkdir /home/app \
     && chown app:app -R /home/app
+
+RUN set -eux \
+    && gosu app pip install ansible
 
 VOLUME /home/app
 

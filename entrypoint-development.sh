@@ -46,11 +46,7 @@ function setup_python_env() {
 }
 
 function setup_initialized() {
-  if [[ ! -f /app/requirements-develop.txt ]]; then return 0; fi
-  if [[ -f /app/.initialized ]]; then return 0; fi
-
   step "Installing requirements"
-
   (
     set -x
     chown app.app -R /python
@@ -59,9 +55,7 @@ function setup_initialized() {
       wheel \
       pip \
       pip-tools | cat
-
-    gosu app pip install -r requirements-develop.txt | cat
-    gosu app touch /app/.initialized
+    gosu app pip install --upgrade pip | cat
   )
 
   step "Initialized $(success [Done])"
@@ -70,8 +64,6 @@ function setup_initialized() {
 function check_permissions() {
   (
     find /app /python \
-      -not \( -name "frontend" -prune \) \
-      -not \( -name "node_modules" -prune \) \
       -not \( -name ".git" -prune \) \
       -not \( -name ".cache" -prune \) \
       -not -user app \
