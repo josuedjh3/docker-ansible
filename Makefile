@@ -1,21 +1,21 @@
 build:
 	docker build \
 		--target base \
-		--tag josuedjhcayola/alpine-ansible:latest \
+		--tag josuedjhcayola/alpine-ansible1:latest \
 		.
 
 	docker build \
 		--target develop \
-		--tag josuedjhcayola/alpine-ansible:develop \
+		--tag josuedjhcayola/alpine-ansible1:develop \
 		.
 
 .PHONY: push
 push: build
 	docker push \
-		josuedjhcayola/alpine-ansible:latest
+		josuedjhcayola/alpine-ansible1:latest
 
 	docker push \
-		josuedjhcayola/alpine-ansible:develop
+		josuedjhcayola/alpine-ansible1:develop
 
 .PHONY: ansible
 ansible:

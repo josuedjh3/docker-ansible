@@ -40,6 +40,7 @@ function setup_python_env() {
     gosu app python -m venv /python
     gosu app /python/bin/pip install --quiet setuptools wheel
     gosu app /python/bin/pip install pip-tools
+    gosu app /python/bin/pip install ansible
   )
 
   step "Python environment $(success [Done])"

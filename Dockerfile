@@ -112,3 +112,5 @@ RUN set -eux \
 VOLUME /home/app
 
 COPY entrypoint-development.sh /sbin/docker-entrypoint.sh
+
+CMD ["--shell"]
